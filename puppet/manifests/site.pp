@@ -19,7 +19,9 @@ File {
 include baseconfig
 
 node gateway{}
-node san01{}
+node san01{
+    include iscsi::target
+}
 node server01{}
 node server02{}
 node client01{}

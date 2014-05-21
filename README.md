@@ -102,8 +102,12 @@ gateway.local.pvt
 
 useful commands
 ===============
+
  * list Luns on the san
+
      sudo  tgtadm --lld iscsi --op show --mode target
+
  * stonith example
+
      sudo /usr/local/bin/stonith.sh -a server02 -o stop
 

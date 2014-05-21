@@ -22,6 +22,13 @@ node gateway{}
 node san01{
     include iscsi::target
 }
-node server01{}
-node server02{}
+node server01{
+    include iscsi::initiator
+    include iscsi::initialize-disk
+    include rhcs
+    package { "luci": ensure => present }
+}
+node server02{
+    include iscsi::initiator
+}
 node client01{}

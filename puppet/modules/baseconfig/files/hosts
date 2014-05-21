@@ -1,0 +1,8 @@
+127.0.0.1 localhost localhost.localdomain
+ 
+# Servers
+192.168.100.10 san01
+192.168.100.20 server01
+192.168.100.30 server02
+# Cluster service IPs
+192.168.100.101 mysql

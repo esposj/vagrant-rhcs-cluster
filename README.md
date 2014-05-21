@@ -15,13 +15,23 @@ Finally, we will build 2 services, NFS and MySQL on server01 and server02 and us
 
 The first version of this will be bound to virtualbox, and the server hosts will need key based ssh access to the host machine.  This is because we will be using a script on the host machine to provide fencing and STONITH capabilities.
 
-gateway.local.pvt
-=================
- * ETH0 - NAT
- * ETH1 
-    Type: Internal Network
-    Name: publicnet
-    IP: 192.168.100.1 / 255.255.255.0
+What works today:
+The gateway doesn't do anything yet.
+yum up san01 - iscsi target backed by a small 2gb file
+yum up server01 - iscsi initator, script runs which formats and creates an lvm volume called data and unmounts it
+                - basic rchs packages
+yum up server02 - iscsi initiator
+                - basic rhcs packages
+
+In order to use the script /usr/local/bin/stonith.sh on server01 and server02 several things need to happen
+    - the host machine must allow ssh connections
+    - a private key must be added to puppet/modules/baseconfig/files/id_rsa
+    - an initial ssh connection must be made to cache the host-key.
+    - the host must be running virtualbox, and the file puppet/modules/rhcs/files/stonith.sh 
+      should be modified to the vboxmanage binary.  It is currently configured for the default mac install of virtualbox.
+
+As of 05/20/14, it is ready to start working through the mechanics of rhcs
+
 
 san01.local.pvt
 ===============
@@ -79,3 +89,19 @@ client01.local.pvt
     Type: Internal Network
     Name: servicenet 
     IP: 192.168.200.40 / 255.255.255.0
+
+gateway.local.pvt
+=================
+ * ETH0 - NAT
+ * ETH1 
+    Type: Internal Network
+    Name: publicnet
+    IP: 192.168.100.1 / 255.255.255.0
+
+useful commands
+===============
+ * list Luns on the san
+     sudo  tgtadm --lld iscsi --op show --mode target
+ * stonith example
+     sudo /usr/local/bin/stonith.sh -a server02 -o stop
+

@@ -154,6 +154,8 @@ Vagrant.configure("2")  do |config|
         puppet.manifests_path = 'puppet/manifests'
         puppet.manifest_file = 'site.pp'
         puppet.module_path = 'puppet/modules'
+	puppet.working_directory = "/tmp/vagrant-puppet-3/"
+
     end
 end
 
